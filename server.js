@@ -76,7 +76,8 @@ function labelPrestation(val) {
   const map = {
     mariage:  '💍 Henné Mariage',
     evjf:     '🥂 Henné Soirée / EVJF',
-    domicile: '🏠 Henné à domicile',
+    domicile: '🏠 Henné à domicile (déplacement chez le client)',
+    artiste:  '🏡 Henné chez l\'artiste (Zone B Ballon, villa 109, Dakar)',
     stand:    '🎪 Stand Événement',
     autre:    '✨ Autre / Sur mesure',
   };
