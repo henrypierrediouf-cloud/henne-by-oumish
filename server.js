@@ -139,14 +139,14 @@ app.post('/api/reservation', async (req, res) => {
   console.log(`   ${reservation.prenom} ${reservation.nom} — ${reservation.prestation} — ${formatDate(date)}`);
 
   const mailArtiste = {
-    from:    `"Henné by Oumish — Réservations" <${EMAIL_USER}>`,
+    from:    `"Henné by Oumoul Khalifa — Réservations" <${EMAIL_USER}>`,
     to:      EMAIL_DEST,
     subject: `🌿 Nouvelle réservation — ${reservation.prenom} ${reservation.nom} (${formatDate(date)})`,
     html: `
       <div style="font-family:'Segoe UI',sans-serif;max-width:600px;margin:0 auto;background:#FAF5EC;border-radius:12px;overflow:hidden;">
         <div style="background:#6B1A2A;padding:32px 40px;text-align:center;">
           <h1 style="color:#E8C97A;font-size:1.6rem;margin:0;font-weight:300;letter-spacing:.05em;">
-            Henné <span style="color:#fff;">by Oumish</span>
+            Henné <span style="color:#fff;">by Oumoul Khalifa</span>
           </h1>
           <p style="color:rgba(255,255,255,.7);margin:8px 0 0;font-size:.9rem;">Nouvelle demande de réservation</p>
         </div>
@@ -166,7 +166,7 @@ app.post('/api/reservation', async (req, res) => {
             <p style="font-size:.92rem;color:#2C1810;line-height:1.7;margin:0;">${reservation.message.replace(/\n/g, '<br>')}</p>
           </div>
           <div style="margin-top:28px;text-align:center;">
-            <a href="mailto:${reservation.email}?subject=Réponse à votre demande de réservation — Henné by Oumish"
+            <a href="mailto:${reservation.email}?subject=Réponse à votre demande de réservation — Henné by Oumoul Khalifa"
                style="display:inline-block;background:#6B1A2A;color:#fff;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;">
               Répondre à ${reservation.prenom} →
             </a>
@@ -180,14 +180,14 @@ app.post('/api/reservation', async (req, res) => {
   };
 
   const mailClient = {
-    from:    `"Henné by Oumish" <${EMAIL_USER}>`,
+    from:    `"Henné by Oumoul Khalifa" <${EMAIL_USER}>`,
     to:      reservation.email,
-    subject: `✨ Votre demande de réservation — Henné by Oumish`,
+    subject: `✨ Votre demande de réservation — Henné by Oumoul Khalifa`,
     html: `
       <div style="font-family:'Segoe UI',sans-serif;max-width:600px;margin:0 auto;background:#FAF5EC;border-radius:12px;overflow:hidden;">
         <div style="background:#6B1A2A;padding:36px 40px;text-align:center;">
           <h1 style="color:#E8C97A;font-size:1.8rem;margin:0;font-weight:300;letter-spacing:.05em;">
-            Henné <span style="color:#fff;">by Oumish</span>
+            Henné <span style="color:#fff;">by Oumoul Khalifa</span>
           </h1>
         </div>
         <div style="padding:40px;">
@@ -215,7 +215,7 @@ app.post('/api/reservation', async (req, res) => {
         </div>
         <div style="background:#2C1810;padding:24px 40px;text-align:center;">
           <p style="color:rgba(250,245,236,.5);font-size:.78rem;margin:0;">
-            © 2025 Henné by Oumish — Île-de-France<br>
+            © 2025 Henné by Oumoul Khalifa — Île-de-France<br>
             Vous recevez cet email car vous avez rempli le formulaire de réservation.
           </p>
         </div>
@@ -402,7 +402,7 @@ initDB()
   .then(() => {
     app.listen(PORT, () => {
       console.log('\n🌿 ─────────────────────────────────────────');
-      console.log(`   Henné by Oumish — Serveur démarré`);
+      console.log(`   Henné by Oumoul Khalifa — Serveur démarré`);
       console.log(`   http://localhost:${PORT}`);
       console.log('─────────────────────────────────────────────');
       console.log(`   Base de données  → PostgreSQL`);
