@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Henné by Oumish</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bordeaux:  #6B1A2A;
+      --bordeaux-d:#4A1020;
+      --gold:      #C9A84C;
+      --gold-light:#E8C97A;
+      --cream:     #FAF5EC;
+      --cream-dark:#F0E8D5;
+      --text-dark: #2C1810;
+      --text-mid:  #5C3A2A;
+      --white:     #FFFFFF;
+      --sidebar-w: 260px;
+
+      --status-wait: #F59E0B;
+      --status-ok:   #10B981;
+      --status-no:   #EF4444;
+      --status-done: #6B7280;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: #F4EFE6;
+      color: var(--text-dark);
+    }
+
+    /* ════════════════ LOGIN ════════════════ */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, var(--bordeaux-d) 0%, var(--bordeaux) 100%);
+      padding: 24px;
+    }
+
+    .login-box {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 52px 44px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+      text-align: center;
+    }
+
+    .login-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--bordeaux);
+      margin-bottom: 4px;
+    }
+
+    .login-logo span { color: var(--gold); }
+
+    .login-badge {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      opacity: 0.6;
+      margin-bottom: 36px;
+      display: block;
+    }
+
+    .login-box label {
+      display: block;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 7px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid rgba(201,168,76,0.3);
+      border-radius: 8px;
+      background: var(--cream);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      margin-bottom: 18px;
+    }
+
+    .login-box input:focus {
+      border-color: var(--bordeaux);
+      box-shadow: 0 0 0 3px rgba(107,26,42,0.08);
+      background: var(--white);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-d));
+      color: var(--white);
+      border: none;
+      border-radius: 40px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 24px rgba(107,26,42,0.3);
+      margin-top: 4px;
+    }
+
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(107,26,42,0.4); }
+
+    .login-error {
+      background: #fde8e8;
+      border-left: 3px solid #ef4444;
+      color: #7b1a1a;
+      font-size: 0.83rem;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      text-align: left;
+      display: none;
+    }
+
+    /* ════════════════ DASHBOARD ════════════════ */
+    #dashboard { display: none; min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: linear-gradient(180deg, var(--bordeaux-d) 0%, var(--bordeaux) 100%);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 32px 24px 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-logo h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+
+    .sidebar-logo h1 span { color: rgba(255,255,255,0.7); }
+
+    .sidebar-logo p {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .sidebar-nav {
+      padding: 20px 12px;
+      flex: 1;
+    }
+
+    .nav-section-title {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      padding: 12px 12px 8px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 0.87rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-link:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    .sidebar-link.active { background: rgba(201,168,76,0.2); color: var(--gold-light); }
+
+    .sidebar-link .icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .sidebar-link.active .icon { background: rgba(201,168,76,0.25); }
+
+    .sidebar-footer {
+      padding: 20px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: color 0.2s;
+      padding: 4px 0;
+    }
+
+    .logout-btn:hover { color: rgba(255,255,255,0.8); }
+
+    /* ── Main content ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+    }
+
+    /* Top bar */
+    .topbar {
+      background: var(--white);
+      padding: 0 36px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--bordeaux);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .export-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      background: rgba(107,26,42,0.07);
+      border: 1.5px solid rgba(107,26,42,0.15);
+      padding: 8px 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+
+    .export-btn:hover { background: var(--bordeaux); color: var(--white); border-color: var(--bordeaux); }
+
+    .refresh-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(201,168,76,0.3);
+      background: none;
+      color: var(--text-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-size: 1rem;
+    }
+
+    .refresh-btn:hover { background: var(--cream); border-color: var(--gold); color: var(--bordeaux); }
+
+    /* ── Page content ── */
+    .page-content { padding: 36px; }
+
+    /* ── Stats cards ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 24px 24px;
+      border: 1px solid rgba(201,168,76,0.15);
+      box-shadow: 0 2px 12px rgba(107,26,42,0.06);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .stat-icon {
+      width: 52px; height: 52px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.total   { background: rgba(107,26,42,0.1); }
+    .stat-icon.wait    { background: rgba(245,158,11,0.12); }
+    .stat-icon.ok      { background: rgba(16,185,129,0.12); }
+    .stat-icon.cancel  { background: rgba(239,68,68,0.1); }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--bordeaux);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── Filters bar ── */
+    .filters-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 30px;
+      border: 1.5px solid rgba(201,168,76,0.3);
+      background: var(--white);
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: all 0.22s;
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active { background: var(--bordeaux); border-color: var(--bordeaux); color: var(--white); }
+
+    .search-input {
+      margin-left: auto;
+      padding: 8px 16px;
+      border: 1.5px solid rgba(201,168,76,0.3);
+      border-radius: 30px;
+      background: var(--white);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      outline: none;
+      width: 220px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .search-input:focus { border-color: var(--bordeaux); box-shadow: 0 0 0 3px rgba(107,26,42,0.08); }
+
+    /* ── Table ── */
+    .table-wrap {
+      background: var(--white);
+      border-radius: 14px;
+      border: 1px solid rgba(201,168,76,0.15);
+      box-shadow: 0 2px 12px rgba(107,26,42,0.06);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: linear-gradient(135deg, var(--bordeaux-d), var(--bordeaux));
+    }
+
+    th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 18px;
+      font-size: 0.87rem;
+      color: var(--text-dark);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: rgba(250,245,236,0.6); }
+
+    .td-name { font-weight: 600; color: var(--bordeaux); }
+
+    .td-prestation {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+    }
+
+    .td-date {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .td-email {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+    }
+
+    .td-email a { color: var(--text-mid); text-decoration: none; }
+    .td-email a:hover { color: var(--bordeaux); }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .status-badge.attente  { background: rgba(245,158,11,0.12); color: #92400E; }
+    .status-badge.confirmee{ background: rgba(16,185,129,0.12); color: #065F46; }
+    .status-badge.annulee  { background: rgba(239,68,68,0.1);   color: #7F1D1D; }
+    .status-badge.terminee { background: rgba(107,114,128,0.1); color: #374151; }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .status-badge.attente   .status-dot { background: var(--status-wait); }
+    .status-badge.confirmee .status-dot { background: var(--status-ok); }
+    .status-badge.annulee   .status-dot { background: var(--status-no); }
+    .status-badge.terminee  .status-dot { background: var(--status-done); }
+
+    /* Status select */
+    .status-select {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 8px;
+      border: 1.5px solid rgba(201,168,76,0.3);
+      border-radius: 8px;
+      background: var(--cream);
+      color: var(--text-dark);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .status-select:focus { border-color: var(--bordeaux); }
+
+    /* Actions */
+    .action-btn {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .action-btn.view  { background: rgba(107,26,42,0.08); color: var(--bordeaux); }
+    .action-btn.email { background: rgba(201,168,76,0.12); color: #92400E; }
+    .action-btn.del   { background: rgba(239,68,68,0.08); color: #991B1B; }
+
+    .action-btn:hover { transform: scale(1.1); }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-mid);
+    }
+
+    .empty-state p { font-size: 0.9rem; opacity: 0.6; margin-top: 12px; }
+
+    /* ── Modal détail ── */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(20,8,12,0.5);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-bg.open { display: flex; }
+
+    .modal {
+      background: var(--white);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, var(--bordeaux-d), var(--bordeaux));
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--white);
+    }
+
+    .modal-close {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: var(--white);
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover { background: rgba(255,255,255,0.25); }
+
+    .modal-body { padding: 28px; }
+
+    .modal-row {
+      display: flex;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      gap: 16px;
+    }
+
+    .modal-row:last-child { border-bottom: none; }
+
+    .modal-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      min-width: 140px;
+      padding-top: 2px;
+    }
+
+    .modal-value {
+      font-size: 0.92rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .modal-message {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-mid);
+      margin-top: 4px;
+    }
+
+    .modal-footer {
+      padding: 20px 28px;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 9px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+
+    .btn-sm.primary { background: var(--bordeaux); color: var(--white); }
+    .btn-sm.primary:hover { background: var(--bordeaux-d); }
+    .btn-sm.secondary { background: rgba(201,168,76,0.12); color: var(--text-mid); border: 1.5px solid rgba(201,168,76,0.3); }
+    .btn-sm.secondary:hover { background: rgba(201,168,76,0.2); }
+
+    /* ── Toast notification ── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: var(--text-dark);
+      color: var(--white);
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.35s;
+      max-width: 320px;
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-left: 4px solid var(--status-ok); }
+    .toast.error   { border-left: 4px solid var(--status-no); }
+
+    /* ── Loader ── */
+    .loader {
+      text-align: center;
+      padding: 60px;
+      color: var(--text-mid);
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .page-content { padding: 20px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .topbar { padding: 0 20px; }
+    }
+
+    /* ── Mobile sidebar toggle ─────────────────────────── */
+    .mobile-toggle {
+      display: none;
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(201,168,76,0.3);
+      background: none;
+      color: var(--text-mid);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .mobile-toggle:hover { background: var(--cream-dark); border-color: var(--gold); color: var(--bordeaux); }
+
+    @media (max-width: 768px) { .mobile-toggle { display: flex; } }
+
+    /* ── Stats page ─────────────────────────────────────── */
+    .stats-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--bordeaux);
+      margin-bottom: 24px;
+    }
+
+    .stats-page-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .stats-page-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 28px;
+      border: 1px solid rgba(201,168,76,0.15);
+      box-shadow: 0 2px 12px rgba(107,26,42,0.06);
+    }
+
+    .stats-page-card h3 {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 20px;
+    }
+
+    .presta-bar-item { margin-bottom: 16px; }
+
+    .presta-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      color: var(--text-dark);
+      margin-bottom: 7px;
+    }
+
+    .presta-bar-label span { color: var(--text-mid); }
+
+    .presta-bar-track {
+      height: 6px;
+      background: rgba(201,168,76,0.15);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .presta-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--bordeaux), var(--gold));
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+
+    .next-resa-card {
+      background: linear-gradient(135deg, var(--bordeaux-d), var(--bordeaux));
+      border-radius: 14px;
+      padding: 28px;
+      color: var(--white);
+    }
+
+    .next-resa-card h3 {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .next-resa-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 6px;
+    }
+
+    .next-resa-sub { font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+
+    @media (max-width: 768px) { .stats-page-grid { grid-template-columns: 1fr; } }
+
+    /* ── Status select colors ─────────────────────────── */
+    .status-select.s-attente  { border-color: #F59E0B; color: #92400E; }
+    .status-select.s-confirmee { border-color: #10B981; color: #065F46; }
+    .status-select.s-annulee  { border-color: #EF4444; color: #7F1D1D; }
+    .status-select.s-terminee { border-color: #9CA3AF; color: #374151; }
+
+    /* ── Modal status buttons ─────────────────────────── */
+    .status-change-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .status-btn {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 5px 13px;
+      border-radius: 20px;
+      border: 1.5px solid;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+    }
+
+    .status-btn.s-attente   { border-color: #F59E0B; color: #92400E; }
+    .status-btn.s-confirmee { border-color: #10B981; color: #065F46; }
+    .status-btn.s-terminee  { border-color: #9CA3AF; color: #374151; }
+    .status-btn.s-annulee   { border-color: #EF4444; color: #7F1D1D; }
+
+    .status-btn.selected,
+    .status-btn:hover { color: #fff; }
+
+    .status-btn.s-attente.selected,   .status-btn.s-attente:hover   { background: #F59E0B; border-color: #F59E0B; }
+    .status-btn.s-confirmee.selected, .status-btn.s-confirmee:hover { background: #10B981; border-color: #10B981; }
+    .status-btn.s-terminee.selected,  .status-btn.s-terminee:hover  { background: #6B7280; border-color: #6B7280; }
+    .status-btn.s-annulee.selected,   .status-btn.s-annulee:hover   { background: #EF4444; border-color: #EF4444; }
+
+    /* ── Received date sub-text ───────────────────────── */
+    .td-received {
+      font-size: 0.72rem;
+      color: var(--text-mid);
+      opacity: 0.5;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ LOGIN ═══════════════ -->
+  <div id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">Henné <span>by Oumish</span></div>
+      <span class="login-badge">Espace Administration</span>
+
+      <div class="login-error" id="login-error"></div>
+
+      <form id="login-form">
+        <label for="login-user">Identifiant</label>
+        <input type="text" id="login-user" placeholder="admin" autocomplete="username" required />
+
+        <label for="login-pass">Mot de passe</label>
+        <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" required />
+
+        <button type="submit" class="login-btn">Se connecter</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════ DASHBOARD ═══════════════ -->
+  <div id="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <h1>Henné <span>by Oumish</span></h1>
+        <p>Administration</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Menu</div>
+        <button class="sidebar-link active" onclick="showPage('reservations')">
+          <span class="icon">📋</span> Réservations
+        </button>
+        <button class="sidebar-link" onclick="showPage('stats')">
+          <span class="icon">📊</span> Statistiques
+        </button>
+        <div class="nav-section-title" style="margin-top:16px;">Site</div>
+        <a class="sidebar-link" href="/" target="_blank">
+          <span class="icon">🌐</span> Voir le site
+        </a>
+        <a class="sidebar-link" href="/reservation.html" target="_blank">
+          <span class="icon">📝</span> Formulaire
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="logout()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+          </svg>
+          Se déconnecter
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <!-- Top bar -->
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="mobile-toggle" id="mobile-toggle" onclick="toggleSidebar()" aria-label="Menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <span class="topbar-title" id="page-title">Réservations</span>
+        </div>
+        <div class="topbar-right">
+          <button class="refresh-btn" onclick="chargerReservations()" title="Actualiser">↻</button>
+          <a class="export-btn" id="export-link" href="#" onclick="exportCSV()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Exporter CSV
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Page Réservations ── -->
+      <div class="page-content" id="page-reservations">
+
+        <!-- Stats -->
+        <div class="stats-grid" id="stats-cards">
+          <div class="stat-card"><div class="stat-icon total">📋</div><div><div class="stat-num" id="s-total">—</div><div class="stat-label">Total réservations</div></div></div>
+          <div class="stat-card"><div class="stat-icon wait">⏳</div><div><div class="stat-num" id="s-wait">—</div><div class="stat-label">En attente</div></div></div>
+          <div class="stat-card"><div class="stat-icon ok">✅</div><div><div class="stat-num" id="s-ok">—</div><div class="stat-label">Confirmées</div></div></div>
+          <div class="stat-card"><div class="stat-icon cancel">❌</div><div><div class="stat-num" id="s-cancel">—</div><div class="stat-label">Annulées</div></div></div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-bar">
+          <button class="filter-pill active" data-filter="all">Toutes</button>
+          <button class="filter-pill" data-filter="En attente">En attente</button>
+          <button class="filter-pill" data-filter="Confirmée">Confirmées</button>
+          <button class="filter-pill" data-filter="Terminée">Terminées</button>
+          <button class="filter-pill" data-filter="Annulée">Annulées</button>
+          <input class="search-input" id="search" type="text" placeholder="🔍  Rechercher…" />
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrap">
+          <div class="loader" id="table-loader">Chargement…</div>
+          <table id="resa-table" style="display:none;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Client</th>
+                <th>Prestation</th>
+                <th>Date événement</th>
+                <th>Lieu</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="resa-tbody"></tbody>
+          </table>
+          <div class="empty-state" id="empty-state" style="display:none;">
+            <div style="font-size:2.5rem;">📭</div>
+            <p>Aucune réservation trouvée</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Page Stats ── -->
+      <div class="page-content" id="page-stats" style="display:none;">
+        <h2 class="stats-section-title">Vue d'ensemble</h2>
+        <div class="stats-page-grid">
+
+          <div class="next-resa-card">
+            <h3>Prochaine réservation confirmée</h3>
+            <div id="next-resa-content"><div style="opacity:.6;font-size:.9rem;">Aucune donnée</div></div>
+          </div>
+
+          <div class="stats-page-card">
+            <h3>Répartition par statut</h3>
+            <div id="statut-bars"></div>
+          </div>
+
+          <div class="stats-page-card" style="grid-column:1/-1;">
+            <h3>Prestations les plus demandées</h3>
+            <div id="presta-bars"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Modal détail ── -->
+  <div class="modal-bg" id="modal-bg">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title">Détail réservation</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ── Config ────────────────────────────────────────────
+    const ADMIN_USER = 'admin';           // identifiant
+    const ADMIN_PASS = 'oumish2025';      // mot de passe (= ADMIN_KEY dans .env)
+    const API_KEY    = 'oumish2025';      // clé API
+
+    let allReservations = [];
+    let filtreActuel    = 'all';
+
+    // ── LOGIN ─────────────────────────────────────────────
+    const loginForm  = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+
+    // Vérifie si déjà connecté
+    if (sessionStorage.getItem('admin_ok') === '1') showDashboard();
+
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const user = document.getElementById('login-user').value.trim();
+      const pass = document.getElementById('login-pass').value;
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        sessionStorage.setItem('admin_ok', '1');
+        loginError.style.display = 'none';
+        showDashboard();
+      } else {
+        loginError.textContent    = '❌ Identifiant ou mot de passe incorrect.';
+        loginError.style.display  = 'block';
+        document.getElementById('login-pass').value = '';
+      }
+    });
+
+    function showDashboard() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display    = 'block';
+      chargerReservations();
+    }
+
+    function logout() {
+      sessionStorage.removeItem('admin_ok');
+      location.reload();
+    }
+
+    // ── NAVIGATION PAGES ──────────────────────────────────
+    function showPage(name) {
+      document.getElementById('page-reservations').style.display = name === 'reservations' ? 'block' : 'none';
+      document.getElementById('page-stats').style.display        = name === 'stats'        ? 'block' : 'none';
+      document.getElementById('page-title').textContent = name === 'reservations' ? 'Réservations' : 'Statistiques';
+
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      if (name === 'stats') afficherStats();
+    }
+
+    // ── CHARGEMENT DES RÉSERVATIONS ───────────────────────
+    async function chargerReservations() {
+      document.getElementById('table-loader').style.display = 'block';
+      document.getElementById('resa-table').style.display   = 'none';
+      document.getElementById('empty-state').style.display  = 'none';
+
+      try {
+        const res  = await fetch(`/api/reservations?key=${API_KEY}`);
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || 'Erreur serveur');
+
+        allReservations = data.reservations.reverse(); // plus récentes d'abord
+        afficherStats();
+        afficherTableau(allReservations);
+
+      } catch (err) {
+        document.getElementById('table-loader').textContent = '⚠️ Erreur : ' + err.message;
+      }
+    }
+
+    // ── AFFICHAGE DU TABLEAU ──────────────────────────────
+    function afficherTableau(liste) {
+      document.getElementById('table-loader').style.display = 'none';
+
+      const tbody = document.getElementById('resa-tbody');
+      tbody.innerHTML = '';
+
+      const filtree = filtrerListe(liste);
+
+      if (filtree.length === 0) {
+        document.getElementById('empty-state').style.display = 'block';
+        document.getElementById('resa-table').style.display  = 'none';
+        return;
+      }
+
+      document.getElementById('resa-table').style.display   = 'table';
+      document.getElementById('empty-state').style.display  = 'none';
+
+      filtree.forEach(r => {
+        const statutCls = { 'En attente': 's-attente', 'Confirmée': 's-confirmee', 'Terminée': 's-terminee', 'Annulée': 's-annulee' };
+        const recu = r.createdAt ? new Date(r.createdAt).toLocaleDateString('fr-FR', { day:'2-digit', month:'short' }) : '';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="color:var(--text-mid);font-size:.78rem;opacity:.5;">#${String(r.id).slice(-6)}</td>
+          <td>
+            <div class="td-name">${r.prenom} ${r.nom}</div>
+            <div class="td-email"><a href="mailto:${r.email}">${r.email}</a></div>
+            ${recu ? `<div class="td-received">Reçu le ${recu}</div>` : ''}
+          </td>
+          <td class="td-prestation">${r.prestation}</td>
+          <td class="td-date">${formatDate(r.date)}</td>
+          <td style="font-size:.83rem;color:var(--text-mid);">${r.ville || '—'}</td>
+          <td>
+            <select class="status-select ${statutCls[r.statut] || ''}" onchange="changerStatut(${r.id}, this.value, this)" data-id="${r.id}">
+              <option ${r.statut==='En attente'  ? 'selected':''}>En attente</option>
+              <option ${r.statut==='Confirmée'   ? 'selected':''}>Confirmée</option>
+              <option ${r.statut==='Terminée'    ? 'selected':''}>Terminée</option>
+              <option ${r.statut==='Annulée'     ? 'selected':''}>Annulée</option>
+            </select>
+          </td>
+          <td>
+            <div style="display:flex;gap:6px;">
+              <button class="action-btn view" onclick="ouvrirModal(${r.id})" title="Voir le détail">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+              <a class="action-btn email" href="https://mail.google.com/mail/?view=cm&to=${r.email}&su=Votre%20réservation%20—%20Henné%20by%20Oumish" target="_blank" title="Répondre par email">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </a>
+              <button class="action-btn del" onclick="supprimerReservation(${r.id})" title="Supprimer">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filtrerListe(liste) {
+      const q = document.getElementById('search').value.toLowerCase();
+      return liste.filter(r => {
+        const matchFiltre = filtreActuel === 'all' || r.statut === filtreActuel;
+        const matchSearch = !q ||
+          `${r.prenom} ${r.nom} ${r.email} ${r.prestation} ${r.ville}`.toLowerCase().includes(q);
+        return matchFiltre && matchSearch;
+      });
+    }
+
+    // ── SUPPRIMER ─────────────────────────────────────────
+    async function supprimerReservation(id) {
+      id = Number(id);
+      const r = allReservations.find(r => Number(r.id) === id);
+      if (!r) return toast('❌ Réservation introuvable', 'error');
+      if (!confirm(`Supprimer la réservation de ${r.prenom} ${r.nom} ?\nCette action est irréversible.`)) return;
+
+      try {
+        const res  = await fetch(`/api/reservations/${id}?key=${API_KEY}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Erreur serveur');
+
+        allReservations = allReservations.filter(r => Number(r.id) !== id);
+        afficherStats();
+        afficherTableau(allReservations);
+        toast('🗑 Réservation supprimée', 'success');
+
+      } catch (err) {
+        toast(`❌ ${err.message}`, 'error');
+      }
+    }
+
+    // ── CHANGER STATUT ────────────────────────────────────
+    const statutCls = { 'En attente': 's-attente', 'Confirmée': 's-confirmee', 'Terminée': 's-terminee', 'Annulée': 's-annulee' };
+
+    async function changerStatut(id, statut, selectEl) {
+      try {
+        const res = await fetch(`/api/reservations/${id}/statut?key=${API_KEY}`, {
+          method:  'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ statut }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        const idx = allReservations.findIndex(r => r.id === id);
+        if (idx !== -1) allReservations[idx].statut = statut;
+
+        if (selectEl) {
+          selectEl.className = 'status-select ' + (statutCls[statut] || '');
+        }
+
+        afficherStats();
+        toast(`Statut mis à jour : ${statut}`, 'success');
+
+      } catch (err) {
+        toast(err.message, 'error');
+      }
+    }
+
+    // ── MODAL DÉTAIL ──────────────────────────────────────
+    function ouvrirModal(id) {
+      const r = allReservations.find(r => r.id === id);
+      if (!r) return;
+
+      document.getElementById('modal-title').textContent = `${r.prenom} ${r.nom}`;
+
+      document.getElementById('modal-body').innerHTML = `
+        <div class="modal-row"><span class="modal-label">Prestation</span><span class="modal-value">${r.prestation}</span></div>
+        <div class="modal-row"><span class="modal-label">Date événement</span><span class="modal-value">${formatDate(r.date)}</span></div>
+        <div class="modal-row"><span class="modal-label">Nb personnes</span><span class="modal-value">${r.nb || '—'}</span></div>
+        <div class="modal-row"><span class="modal-label">Lieu</span><span class="modal-value">${r.ville || '—'}</span></div>
+        <div class="modal-row"><span class="modal-label">Styles souhaités</span><span class="modal-value">${r.styles || '—'}</span></div>
+        <div class="modal-row"><span class="modal-label">Email</span><span class="modal-value"><a href="mailto:${r.email}" style="color:var(--bordeaux);">${r.email}</a></span></div>
+        <div class="modal-row"><span class="modal-label">Téléphone</span><span class="modal-value">${r.tel ? `<a href="tel:${r.tel}" style="color:var(--bordeaux);">${r.tel}</a>` : '—'}</span></div>
+        <div class="modal-row"><span class="modal-label">Reçu le</span><span class="modal-value">${r.createdAt ? new Date(r.createdAt).toLocaleString('fr-FR') : '—'}</span></div>
+        <div class="modal-row" style="flex-direction:column;gap:10px;">
+          <span class="modal-label">Statut</span>
+          <div class="status-change-row" id="modal-status-row">
+            ${['En attente','Confirmée','Terminée','Annulée'].map(s => {
+              const k = { 'En attente':'s-attente','Confirmée':'s-confirmee','Terminée':'s-terminee','Annulée':'s-annulee' }[s];
+              return `<button class="status-btn ${k}${r.statut===s?' selected':''}" onclick="changerStatutModal(${r.id},'${s}',this)">${s}</button>`;
+            }).join('')}
+          </div>
+        </div>
+        <div class="modal-row" style="flex-direction:column;">
+          <span class="modal-label" style="margin-bottom:8px;">Message</span>
+          <div class="modal-message">${(r.message || '—').replace(/\n/g, '<br>')}</div>
+        </div>
+      `;
+
+      document.getElementById('modal-footer').innerHTML = `
+        <button class="btn-sm secondary" onclick="closeModal()">Fermer</button>
+        <a class="btn-sm primary" href="https://mail.google.com/mail/?view=cm&to=${r.email}&su=Votre%20réservation%20—%20Henné%20by%20Oumish" target="_blank">
+          ✉ Répondre par email
+        </a>
+      `;
+
+      document.getElementById('modal-bg').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-bg').classList.remove('open');
+    }
+
+    document.getElementById('modal-bg').addEventListener('click', e => {
+      if (e.target === document.getElementById('modal-bg')) closeModal();
+    });
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // ── STATS ─────────────────────────────────────────────
+    function afficherStats() {
+      const total  = allReservations.length;
+      const wait   = allReservations.filter(r => r.statut === 'En attente').length;
+      const ok     = allReservations.filter(r => r.statut === 'Confirmée').length;
+      const cancel = allReservations.filter(r => r.statut === 'Annulée').length;
+      const done   = allReservations.filter(r => r.statut === 'Terminée').length;
+
+      document.getElementById('s-total').textContent  = total;
+      document.getElementById('s-wait').textContent   = wait;
+      document.getElementById('s-ok').textContent     = ok;
+      document.getElementById('s-cancel').textContent = cancel;
+
+      // ── Prochaine réservation confirmée
+      const today = new Date().toISOString().split('T')[0];
+      const next  = allReservations
+        .filter(r => r.statut === 'Confirmée' && r.date >= today)
+        .sort((a, b) => a.date.localeCompare(b.date))[0];
+
+      const nextEl = document.getElementById('next-resa-content');
+      if (nextEl) {
+        if (next) {
+          nextEl.innerHTML = `
+            <div class="next-resa-name">${next.prenom} ${next.nom}</div>
+            <div class="next-resa-sub">${next.prestation} · ${formatDate(next.date)}</div>
+            ${next.ville ? `<div style="font-size:.78rem;color:rgba(255,255,255,.45);margin-top:6px;">${next.ville}</div>` : ''}
+          `;
+        } else {
+          nextEl.innerHTML = '<div style="opacity:.55;font-size:.88rem;">Aucune réservation confirmée à venir</div>';
+        }
+      }
+
+      // ── Barres statut
+      const statutEl = document.getElementById('statut-bars');
+      if (statutEl) {
+        const statuts = [
+          { label: 'En attente', count: wait,   color: '#F59E0B' },
+          { label: 'Confirmées', count: ok,     color: '#10B981' },
+          { label: 'Terminées',  count: done,   color: '#6B7280' },
+          { label: 'Annulées',   count: cancel, color: '#EF4444' },
+        ];
+        statutEl.innerHTML = statuts.map(s => `
+          <div class="presta-bar-item">
+            <div class="presta-bar-label"><strong>${s.label}</strong><span>${s.count}</span></div>
+            <div class="presta-bar-track">
+              <div class="presta-bar-fill" style="width:${total ? Math.round(s.count/total*100) : 0}%;background:${s.color}"></div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // ── Barres prestations
+      const counts = {};
+      allReservations.forEach(r => { counts[r.prestation] = (counts[r.prestation] || 0) + 1; });
+      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+      const prestaEl = document.getElementById('presta-bars');
+      if (prestaEl) {
+        if (sorted.length === 0) {
+          prestaEl.innerHTML = '<p style="opacity:.5;font-size:.85rem;">Aucune donnée disponible</p>';
+        } else {
+          const maxCount = sorted[0][1];
+          prestaEl.innerHTML = sorted.map(([k, v]) => `
+            <div class="presta-bar-item">
+              <div class="presta-bar-label"><strong>${k}</strong><span>${v} demande${v > 1 ? 's' : ''}</span></div>
+              <div class="presta-bar-track">
+                <div class="presta-bar-fill" style="width:${Math.round(v/maxCount*100)}%"></div>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    // ── EXPORT CSV ────────────────────────────────────────
+    function exportCSV() {
+      window.open(`/api/reservations/export?key=${API_KEY}`, '_blank');
+    }
+
+    // ── FILTRES ───────────────────────────────────────────
+    document.querySelectorAll('.filter-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filtreActuel = btn.dataset.filter;
+        afficherTableau(allReservations);
+      });
+    });
+
+    document.getElementById('search').addEventListener('input', () => {
+      afficherTableau(allReservations);
+    });
+
+    // ── HELPERS ───────────────────────────────────────────
+    function formatDate(d) {
+      if (!d) return '—';
+      const [y, m, j] = d.split('-');
+      return `${j}/${m}/${y}`;
+    }
+
+    function badgeStatut(s) {
+      const cls = { 'En attente': 'attente', 'Confirmée': 'confirmee', 'Annulée': 'annulee', 'Terminée': 'terminee' };
+      return `<span class="status-badge ${cls[s] || 'attente'}"><span class="status-dot"></span>${s}</span>`;
+    }
+
+    // ── CHANGER STATUT DEPUIS LE MODAL ───────────────────
+    async function changerStatutModal(id, statut, btn) {
+      const row = document.getElementById('modal-status-row');
+      await changerStatut(id, statut, null);
+      if (row) {
+        row.querySelectorAll('.status-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      }
+      // Met aussi à jour le select dans le tableau si visible
+      const sel = document.querySelector(`.status-select[data-id="${id}"]`);
+      if (sel) {
+        sel.value = statut;
+        sel.className = 'status-select ' + (statutCls[statut] || '');
+      }
+    }
+
+    // ── SIDEBAR MOBILE ────────────────────────────────────
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    document.addEventListener('click', e => {
+      const sidebar = document.getElementById('sidebar');
+      const toggle  = document.getElementById('mobile-toggle');
+      if (window.innerWidth <= 768 && sidebar.classList.contains('open')
+          && !sidebar.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    function toast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent  = msg;
+      t.className    = `toast ${type} show`;
+      setTimeout(() => { t.classList.remove('show'); }, 3500);
+    }
+  </script>
+</body>
+</html>

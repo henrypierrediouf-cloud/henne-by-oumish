@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>À propos — Henné by Oumish</title>
+  <meta name="description" content="Découvrez Oumish, artiste hennée passionnée en Île-de-France. Son histoire, sa formation et sa passion pour les traditions orientales et berbères." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── ABOUT ─────────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 70px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-image-wrap { position: relative; }
+
+    .about-img-placeholder {
+      width: 100%;
+      padding-bottom: 125%;
+      background: linear-gradient(135deg, var(--cream-dark) 0%, #E8D5B8 100%);
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px var(--shadow);
+    }
+
+    .about-img-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(201,168,76,0.15) 0%, transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(107,26,42,0.1) 0%, transparent 60%);
+    }
+
+    .about-img-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-mid);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+      gap: 12px;
+    }
+
+    .about-accent-box {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      background: var(--bordeaux);
+      color: var(--white);
+      padding: 22px 30px;
+      border-radius: var(--radius);
+      font-family: 'Cormorant Garamond', serif;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(107,26,42,0.35);
+    }
+
+    .about-accent-box .big-num {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+
+    .about-accent-box p {
+      font-size: 0.82rem;
+      opacity: 0.85;
+      margin-top: 4px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    .about-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300;
+      color: var(--bordeaux);
+      margin-bottom: 28px;
+    }
+
+    .about-content h2 em { font-style: italic; color: var(--gold); }
+
+    .about-content p {
+      font-size: 0.97rem;
+      line-height: 1.9;
+      color: var(--text-mid);
+      margin-bottom: 18px;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+      margin-bottom: 36px;
+    }
+
+    /* ── VALEURS ───────────────────────────────────────────── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .value-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      text-align: center;
+      border: 1px solid rgba(201,168,76,0.2);
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .value-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px var(--shadow);
+    }
+
+    .value-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+
+    .value-card h3 {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--bordeaux);
+      margin-bottom: 10px;
+    }
+
+    .value-card p {
+      font-size: 0.87rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    /* ── PARCOURS ──────────────────────────────────────────── */
+    .timeline {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), var(--bordeaux));
+      opacity: 0.3;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 40px;
+      align-items: flex-start;
+    }
+
+    .timeline-dot {
+      flex-shrink: 0;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: var(--bordeaux);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-light);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(107,26,42,0.3);
+      z-index: 1;
+    }
+
+    .timeline-content {
+      padding-top: 14px;
+    }
+
+    .timeline-content h3 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--bordeaux);
+      margin-bottom: 6px;
+    }
+
+    .timeline-content p {
+      font-size: 0.87rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    /* ── CTA ────────────────────────────────────────────────── */
+    .cta-band {
+      background: linear-gradient(135deg, var(--bordeaux) 0%, #4A1020 100%);
+      padding: 80px 5%;
+      text-align: center;
+    }
+
+    .cta-band h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .cta-band h2 em { font-style: italic; color: var(--gold-light); }
+
+    .cta-band p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 36px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--text-dark);
+      padding: 14px 36px;
+      border-radius: 40px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 8px 24px rgba(201,168,76,0.4);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(201,168,76,0.5);
+    }
+
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 56px; }
+      .about-image-wrap { max-width: 460px; margin: 0 auto; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 580px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .about-accent-box { right: 10px; bottom: -16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html">Henné <span>by Oumish</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="a-propos.html" class="active">À propos</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="prestations.html">Prestations</a></li>
+      <li><a href="reservation.html" class="nav-cta">Réserver</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Accueil</a>
+    <a href="a-propos.html" class="active">À propos</a>
+    <a href="galerie.html">Galerie</a>
+    <a href="prestations.html">Prestations</a>
+    <a href="reservation.html" class="nav-cta">Réserver</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <p class="page-badge">✦ L'artiste ✦</p>
+    <h1>À <em>propos</em> de moi</h1>
+    <p>Passionnée par l'art du henné depuis l'enfance, je mets mon savoir-faire à votre service pour sublimer vos moments les plus précieux.</p>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section">
+    <div class="about-grid">
+      <div class="about-image-wrap fade-in">
+        <div class="about-img-placeholder">
+          <div class="about-img-label">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <path d="m21 15-5-5L5 21"/>
+            </svg>
+            Photo de l'artiste
+          </div>
+        </div>
+        <div class="about-accent-box">
+          <div class="big-num">5+</div>
+          <p>années<br>d'expérience</p>
+        </div>
+      </div>
+
+      <div class="about-content fade-in">
+        <h2>Une artiste <em>passionnée</em><br>à votre service</h2>
+        <p>
+          Bienvenue dans l'univers de Henné by Oumish. Passionnée par cet art ancestral
+          depuis l'enfance, j'ai grandi entourée de traditions orientales et berbères qui
+          ont forgé mon regard artistique et ma sensibilité aux détails.
+        </p>
+        <p>
+          Je me suis formée auprès d'artistes de renom en France et au Maroc pour
+          maîtriser aussi bien les techniques traditionnelles que les tendances contemporaines.
+          Chaque création est unique, pensée pour sublimer votre peau et magnifier l'instant.
+        </p>
+        <p>
+          Je travaille exclusivement avec du <strong>henné naturel 100% pur</strong>, sans additifs
+          chimiques, pour votre sécurité et la beauté des teintes obtenues. Votre confiance
+          est ma priorité.
+        </p>
+
+        <div class="about-tags">
+          <span class="tag">Henné naturel 100%</span>
+          <span class="tag">Motifs mariage</span>
+          <span class="tag">Style oriental</span>
+          <span class="tag">Style berbère</span>
+          <span class="tag">Style contemporain</span>
+          <span class="tag">Île-de-France & France entière</span>
+        </div>
+
+        <div class="btn-group" style="justify-content:flex-start;">
+          <a href="reservation.html" class="btn-primary">Réserver une prestation</a>
+          <a href="galerie.html" class="btn-secondary">Voir mes créations</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALEURS -->
+  <section class="section section-alt">
+    <div class="section-header">
+      <p class="section-badge">✦ Mes engagements ✦</p>
+      <h2 class="section-title">Ce qui me <em>définit</em></h2>
+      <div class="gold-rule"></div>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card fade-in">
+        <div class="value-icon">🌿</div>
+        <h3>100% Naturel</h3>
+        <p>J'utilise uniquement du henné naturel pur, sans produits chimiques ni additifs, pour une peau saine et des teintes riches.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">✨</div>
+        <h3>Créations uniques</h3>
+        <p>Chaque motif est dessiné à la main, adapté à votre morphologie et à vos envies. Aucun tatouage ne ressemble à un autre.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">💛</div>
+        <h3>Passion & soin</h3>
+        <p>Je mets tout mon cœur dans chaque prestation. Votre satisfaction et votre confort sont ma priorité absolue.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">📍</div>
+        <h3>Déplacement inclus</h3>
+        <p>Je me déplace chez vous, dans votre salle de mariage ou sur votre événement. La magie vient à vous.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">🎨</div>
+        <h3>Polyvalence artistique</h3>
+        <p>Motifs orientaux, berbères, indiens ou contemporains — je m'adapte à tous les styles et toutes les occasions.</p>
+      </div>
+      <div class="value-card fade-in">
+        <div class="value-icon">⏱️</div>
+        <h3>Réponse rapide</h3>
+        <p>Je m'engage à répondre à toutes les demandes sous 24h et à établir un devis personnalisé pour votre projet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARCOURS -->
+  <section class="section">
+    <div class="section-header">
+      <p class="section-badge">✦ Mon histoire ✦</p>
+      <h2 class="section-title">Mon <em>parcours</em></h2>
+      <div class="gold-rule"></div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot">2019</div>
+        <div class="timeline-content">
+          <h3>Les premiers pas</h3>
+          <p>Premières formations auprès d'artistes hennées en Île-de-France. Découverte des techniques de base et des motifs traditionnels marocains.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot">2020</div>
+        <div class="timeline-content">
+          <h3>Formation au Maroc</h3>
+          <p>Voyage de perfectionnement à Marrakech auprès de maîtresses-hennées. Maîtrise des motifs arabesques et berbères authentiques.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot">2021</div>
+        <div class="timeline-content">
+          <h3>Premiers mariages</h3>
+          <p>Lancement officiel de l'activité. Premières prestations mariage, déjà plus de 50 mariées sublimées dès la première année.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot">2023</div>
+        <div class="timeline-content">
+          <h3>Développement événementiel</h3>
+          <p>Ouverture aux stands événementiels, festivals et animations d'entreprise. Collaboration avec des agences événementielles parisiennes.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot">Auj.</div>
+        <div class="timeline-content">
+          <h3>Henné by Oumish</h3>
+          <p>Plus de 500 personnes sublimées, une communauté fidèle et une passion intacte pour cet art qui ne cesse de m'inspirer chaque jour.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Prête à vous faire <em>sublimer</em> ?</h2>
+    <p>Contactez-moi pour discuter de votre projet et recevoir un devis personnalisé sous 24h.</p>
+    <a href="reservation.html" class="btn-gold">Réserver maintenant →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Henné by Oumish</h3>
+        <p>Artiste hennée passionnée, je sublime vos moments les plus précieux avec des créations uniques, inspirées des traditions orientales et berbères.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/hennebyoumish/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/33600000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="a-propos.html">À propos</a></li>
+          <li><a href="galerie.html">Galerie</a></li>
+          <li><a href="prestations.html">Prestations & Tarifs</a></li>
+          <li><a href="reservation.html">Réservation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Prestations</h4>
+        <ul>
+          <li>Henné Mariage</li>
+          <li>Henné Soirée / EVJF</li>
+          <li>Henné à domicile</li>
+          <li>Stand événement</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Henné by Oumish — Tous droits réservés</span>
+      <span>
+        <a href="mentions-legales.html">Mentions légales</a> &nbsp;·&nbsp;
+        <a href="politique-confidentialite.html">Confidentialité</a>
+      </span>
+    </div>
+  </footer>
+
+  <button id="back-top" aria-label="Retour en haut">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="m18 15-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <!-- Remplacez le numéro par le vôtre (format international sans +, ex: 33612345678) -->
+  <a href="https://wa.me/33600000000" id="whatsapp-btn" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+  </a>
+
+  <script src="nav.js"></script>
+</body>
+</html>

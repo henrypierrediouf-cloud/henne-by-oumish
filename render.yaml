@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: henne-by-oumish
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: henne-db
+          property: connectionString
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: EMAIL_DEST
+        sync: false
+      - key: ADMIN_KEY
+        sync: false
+
+databases:
+  - name: henne-db
+    plan: free
+    databaseName: henne
