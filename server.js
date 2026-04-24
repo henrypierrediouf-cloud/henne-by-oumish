@@ -30,6 +30,17 @@ async function initDB() {
       statut      TEXT NOT NULL DEFAULT 'En attente'
     )
   `);
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS avis (
+      id          BIGINT PRIMARY KEY,
+      created_at  TIMESTAMPTZ NOT NULL,
+      prenom      TEXT NOT NULL,
+      prestation  TEXT,
+      note        INTEGER NOT NULL DEFAULT 5,
+      commentaire TEXT NOT NULL,
+      statut      TEXT NOT NULL DEFAULT 'En attente'
+    )
+  `);
 }
 
 // ── Middlewares ───────────────────────────────────────────
@@ -39,10 +50,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
 // ── Config email ──────────────────────────────────────────
-const EMAIL_USER = process.env.EMAIL_USER || 'votre.email@gmail.com';
-const EMAIL_PASS = process.env.EMAIL_PASS || 'votre_mot_de_passe_app';
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
 const EMAIL_DEST = process.env.EMAIL_DEST || 'hennebyoumish@gmail.com';
-const ADMIN_KEY  = process.env.ADMIN_KEY  || 'oumish2025';
+const ADMIN_KEY  = process.env.ADMIN_KEY;
+
+if (!ADMIN_KEY) {
+  console.error('❌ Variable d\'environnement ADMIN_KEY manquante. Arrêt du serveur.');
+  process.exit(1);
+}
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -294,6 +310,90 @@ app.delete('/api/reservations/:id', async (req, res) => {
 
   const r = rowToObj(rows[0]);
   console.log(`   🗑  Réservation #${id} supprimée (${r.prenom} ${r.nom})`);
+  res.json({ success: true });
+});
+
+// ── POST /api/avis ────────────────────────────────────────
+app.post('/api/avis', async (req, res) => {
+  const { prenom, prestation, note, commentaire } = req.body;
+
+  if (!prenom || !commentaire || !note) {
+    return res.status(400).json({ success: false, error: 'Champs obligatoires manquants.' });
+  }
+
+  const noteInt = parseInt(note);
+  if (noteInt < 1 || noteInt > 5) {
+    return res.status(400).json({ success: false, error: 'Note invalide (1-5).' });
+  }
+
+  const id        = Date.now();
+  const createdAt = new Date().toISOString();
+
+  await pool.query(
+    `INSERT INTO avis (id, created_at, prenom, prestation, note, commentaire, statut)
+     VALUES ($1,$2,$3,$4,$5,$6,'En attente')`,
+    [id, createdAt, prenom.trim(), prestation?.trim() || '', noteInt, commentaire.trim()]
+  );
+
+  console.log(`\n⭐ Nouvel avis #${id} de ${prenom.trim()} (${noteInt}/5)`);
+  res.json({ success: true });
+});
+
+// ── GET /api/avis (public — approuvés uniquement) ─────────
+app.get('/api/avis', async (req, res) => {
+  const { rows } = await pool.query(
+    `SELECT id, created_at, prenom, prestation, note, commentaire
+     FROM avis WHERE statut='Approuvé' ORDER BY created_at DESC`
+  );
+  res.json(rows);
+});
+
+// ── GET /api/avis/all (admin) ─────────────────────────────
+app.get('/api/avis/all', async (req, res) => {
+  if (req.query.key !== ADMIN_KEY) {
+    return res.status(401).json({ error: 'Accès non autorisé.' });
+  }
+  const { rows } = await pool.query('SELECT * FROM avis ORDER BY created_at DESC');
+  res.json(rows);
+});
+
+// ── PATCH /api/avis/:id/statut (admin) ───────────────────
+app.patch('/api/avis/:id/statut', async (req, res) => {
+  if (req.query.key !== ADMIN_KEY) {
+    return res.status(401).json({ error: 'Accès non autorisé.' });
+  }
+
+  const id     = parseInt(req.params.id);
+  const statut = req.body.statut;
+  const valides = ['En attente', 'Approuvé', 'Rejeté'];
+
+  if (!valides.includes(statut)) {
+    return res.status(400).json({ error: `Statut invalide. Valeurs : ${valides.join(', ')}` });
+  }
+
+  const { rows } = await pool.query(
+    'UPDATE avis SET statut=$1 WHERE id=$2 RETURNING *',
+    [statut, id]
+  );
+
+  if (rows.length === 0) return res.status(404).json({ error: 'Avis introuvable.' });
+  console.log(`   ✏️  Avis #${id} → ${statut}`);
+  res.json({ success: true, avis: rows[0] });
+});
+
+// ── DELETE /api/avis/:id (admin) ──────────────────────────
+app.delete('/api/avis/:id', async (req, res) => {
+  if (req.query.key !== ADMIN_KEY) {
+    return res.status(401).json({ error: 'Accès non autorisé.' });
+  }
+
+  const { rows } = await pool.query(
+    'DELETE FROM avis WHERE id=$1 RETURNING *',
+    [parseInt(req.params.id)]
+  );
+
+  if (rows.length === 0) return res.status(404).json({ error: 'Avis introuvable.' });
+  console.log(`   🗑  Avis #${req.params.id} supprimé`);
   res.json({ success: true });
 });
 

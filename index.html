@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Henné by Oumish — Accueil</title>
   <meta name="description" content="Henné by Oumish — Artiste hennée à domicile en Île-de-France. Mariages, EVJF, soirées et événements. Motifs orientaux et berbères raffinés, henné naturel 100% pur." />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Henné by Oumish" />
+  <meta property="og:title" content="Henné by Oumish — Art du henné en Île-de-France" />
+  <meta property="og:description" content="Artiste hennée passionnée — mariages, EVJF, soirées et événements. Motifs orientaux et berbères raffinés, henné naturel 100% pur." />
+  <meta property="og:url" content="https://henne-by-oumish.onrender.com/" />
+  <meta property="og:image" content="https://henne-by-oumish.onrender.com/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -421,14 +431,7 @@
     <div class="preview-grid">
       <a href="galerie.html" class="preview-card fade-in">
         <div class="preview-ph">
-          <div class="preview-ph-inner">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <path d="m21 15-5-5L5 21"/>
-            </svg>
-            <span>Galerie photo</span>
-          </div>
+          <img src="https://picsum.photos/seed/prev_galerie/700/420" alt="Galerie" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
         </div>
         <div class="preview-overlay">
           <h3>La Galerie</h3>
@@ -439,12 +442,7 @@
 
       <a href="prestations.html" class="preview-card fade-in">
         <div class="preview-ph">
-          <div class="preview-ph-inner">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <span>Nos formules</span>
-          </div>
+          <img src="https://picsum.photos/seed/prev_tarifs/700/420" alt="Prestations" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
         </div>
         <div class="preview-overlay">
           <h3>Prestations & Tarifs</h3>
@@ -455,13 +453,7 @@
 
       <a href="a-propos.html" class="preview-card fade-in">
         <div class="preview-ph">
-          <div class="preview-ph-inner">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
-            <span>L'artiste</span>
-          </div>
+          <img src="https://picsum.photos/seed/prev_apropos/700/420" alt="À propos" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
         </div>
         <div class="preview-overlay">
           <h3>À propos</h3>
@@ -472,12 +464,7 @@
 
       <a href="reservation.html" class="preview-card fade-in">
         <div class="preview-ph">
-          <div class="preview-ph-inner">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
-            </svg>
-            <span>Réservation</span>
-          </div>
+          <img src="https://picsum.photos/seed/prev_resa/700/420" alt="Réservation" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
         </div>
         <div class="preview-overlay">
           <h3>Réserver</h3>
@@ -527,6 +514,236 @@
       <button class="testimonial-dot" data-idx="2" aria-label="Avis 3"></button>
     </div>
   </div>
+
+  <!-- LAISSER UN AVIS -->
+  <section class="section section-alt" id="laisser-avis">
+    <style>
+      /* ── AVIS FORM ───────────────────────────────────────── */
+      .avis-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        max-width: 1000px;
+        margin: 0 auto;
+        align-items: start;
+      }
+
+      /* Star rating */
+      .star-field { margin-bottom: 20px; }
+      .star-field label.field-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-mid);
+        margin-bottom: 10px;
+      }
+      .stars-input { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 4px; }
+      .stars-input input { display: none; }
+      .stars-input label {
+        font-size: 1.8rem;
+        color: rgba(201,168,76,0.25);
+        cursor: pointer;
+        transition: color 0.15s;
+        line-height: 1;
+      }
+      .stars-input label:hover,
+      .stars-input label:hover ~ label,
+      .stars-input input:checked ~ label { color: var(--gold); }
+
+      /* Form fields */
+      .avis-form .form-group { margin-bottom: 18px; }
+      .avis-form label.field-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-mid);
+        margin-bottom: 8px;
+      }
+      .avis-form input,
+      .avis-form select,
+      .avis-form textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid rgba(201,168,76,0.3);
+        border-radius: 10px;
+        background: var(--white);
+        font-family: 'Raleway', sans-serif;
+        font-size: 0.92rem;
+        color: var(--text-dark);
+        transition: border-color 0.25s;
+        outline: none;
+      }
+      .avis-form input:focus,
+      .avis-form select:focus,
+      .avis-form textarea:focus { border-color: var(--gold); }
+      .avis-form textarea { resize: vertical; min-height: 110px; }
+
+      .avis-success {
+        display: none;
+        text-align: center;
+        padding: 36px 24px;
+        background: var(--white);
+        border-radius: var(--radius);
+        border: 1.5px solid rgba(201,168,76,0.3);
+      }
+      .avis-success .success-icon { font-size: 2.5rem; margin-bottom: 12px; }
+      .avis-success h3 { font-size: 1.4rem; color: var(--bordeaux); font-weight: 300; margin-bottom: 8px; }
+      .avis-success p  { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; }
+
+      /* Approved reviews list */
+      .avis-list { display: flex; flex-direction: column; gap: 20px; }
+      .avis-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 24px 28px;
+        border: 1px solid rgba(201,168,76,0.2);
+        box-shadow: 0 4px 16px var(--shadow);
+      }
+      .avis-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+      .avis-card-author { font-weight: 600; font-size: 0.92rem; color: var(--text-dark); }
+      .avis-card-prestation { font-size: 0.78rem; color: var(--text-mid); margin-top: 2px; }
+      .avis-card-stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; }
+      .avis-card-text { font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; font-style: italic; }
+      .avis-placeholder { text-align: center; color: var(--text-mid); font-size: 0.9rem; opacity: 0.6; padding: 20px 0; }
+
+      @media (max-width: 768px) { .avis-layout { grid-template-columns: 1fr; gap: 40px; } }
+    </style>
+
+    <div class="section-header">
+      <p class="section-badge">✦ Témoignages ✦</p>
+      <h2 class="section-title">Avis de mes <em>clientes</em></h2>
+      <div class="gold-rule"></div>
+    </div>
+
+    <div class="avis-layout">
+
+      <!-- Liste des avis approuvés -->
+      <div>
+        <div class="avis-list" id="avis-list">
+          <p class="avis-placeholder">Chargement des avis…</p>
+        </div>
+      </div>
+
+      <!-- Formulaire de dépôt d'avis -->
+      <div>
+        <form class="avis-form fade-in" id="avis-form">
+          <div class="form-group">
+            <label class="field-label" for="avis-prenom">Votre prénom *</label>
+            <input type="text" id="avis-prenom" name="prenom" placeholder="Marie" required />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label" for="avis-prestation">Prestation</label>
+            <select id="avis-prestation" name="prestation">
+              <option value="">— Choisissez —</option>
+              <option value="Henné Mariage">Henné Mariage</option>
+              <option value="Henné Soirée / EVJF">Henné Soirée / EVJF</option>
+              <option value="Henné à domicile">Henné à domicile</option>
+              <option value="Stand Événement">Stand Événement</option>
+            </select>
+          </div>
+
+          <div class="star-field">
+            <label class="field-label">Note *</label>
+            <div class="stars-input">
+              <input type="radio" name="note" id="s5" value="5" required /><label for="s5">★</label>
+              <input type="radio" name="note" id="s4" value="4" /><label for="s4">★</label>
+              <input type="radio" name="note" id="s3" value="3" /><label for="s3">★</label>
+              <input type="radio" name="note" id="s2" value="2" /><label for="s2">★</label>
+              <input type="radio" name="note" id="s1" value="1" /><label for="s1">★</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="field-label" for="avis-commentaire">Votre avis *</label>
+            <textarea id="avis-commentaire" name="commentaire" placeholder="Partagez votre expérience…" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
+            Publier mon avis
+          </button>
+        </form>
+
+        <div class="avis-success" id="avis-success">
+          <div class="success-icon">🌿</div>
+          <h3>Merci pour votre avis !</h3>
+          <p>Il sera publié après validation. Je vous remercie de votre confiance.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    // ── Chargement des avis approuvés ────────────────────────
+    async function loadAvis() {
+      const list = document.getElementById('avis-list');
+      try {
+        const res  = await fetch('/api/avis');
+        const avis = await res.json();
+        if (!avis.length) {
+          list.innerHTML = '<p class="avis-placeholder">Soyez la première à laisser un avis !</p>';
+          return;
+        }
+        list.innerHTML = avis.map(a => `
+          <div class="avis-card fade-in visible">
+            <div class="avis-card-top">
+              <div>
+                <div class="avis-card-author">${escHtml(a.prenom)}</div>
+                ${a.prestation ? `<div class="avis-card-prestation">${escHtml(a.prestation)}</div>` : ''}
+              </div>
+              <div class="avis-card-stars">${'★'.repeat(a.note)}${'☆'.repeat(5 - a.note)}</div>
+            </div>
+            <p class="avis-card-text">"${escHtml(a.commentaire)}"</p>
+          </div>
+        `).join('');
+      } catch {
+        list.innerHTML = '<p class="avis-placeholder">Impossible de charger les avis.</p>';
+      }
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    loadAvis();
+
+    // ── Soumission du formulaire ──────────────────────────────
+    document.getElementById('avis-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form));
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Envoi…';
+
+      try {
+        const res = await fetch('/api/avis', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        if (json.success) {
+          form.style.display = 'none';
+          document.getElementById('avis-success').style.display = 'block';
+        } else {
+          alert(json.error || 'Une erreur est survenue.');
+          btn.disabled = false;
+          btn.textContent = 'Publier mon avis';
+        }
+      } catch {
+        alert('Erreur réseau. Veuillez réessayer.');
+        btn.disabled = false;
+        btn.textContent = 'Publier mon avis';
+      }
+    });
+  </script>
 
   <!-- FOOTER -->
   <footer>
