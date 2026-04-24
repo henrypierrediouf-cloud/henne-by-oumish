@@ -203,7 +203,7 @@ app.post('/api/reservation', async (req, res) => {
             <p style="margin:6px 0;font-size:.9rem;color:#2C1810;"><strong>Lieu :</strong> ${reservation.ville}</p>
           </div>
           <p style="font-size:.88rem;color:#5C3A2A;line-height:1.7;">
-            En attendant, n'hésitez pas à consulter ma galerie sur TikTok (@hennebyoumy) pour vous inspirer,
+            En attendant, n'hésitez pas à consulter ma galerie sur TikTok (@hennecilbyoumy) pour vous inspirer,
             ou à me contacter directement si vous avez une question urgente.
           </p>
           <div style="margin-top:32px;text-align:center;padding:24px;background:rgba(107,26,42,.05);border-radius:10px;">
