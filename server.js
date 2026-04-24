@@ -52,7 +52,7 @@ app.use(express.static(__dirname));
 // ── Config email ──────────────────────────────────────────
 const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS;
-const EMAIL_DEST = process.env.EMAIL_DEST || 'hennebyoumish@gmail.com';
+const EMAIL_DEST = process.env.EMAIL_DEST || 'oumydioufdiakhate1@gmail.com';
 const ADMIN_KEY  = process.env.ADMIN_KEY;
 
 if (!ADMIN_KEY) {
@@ -203,19 +203,19 @@ app.post('/api/reservation', async (req, res) => {
             <p style="margin:6px 0;font-size:.9rem;color:#2C1810;"><strong>Lieu :</strong> ${reservation.ville}</p>
           </div>
           <p style="font-size:.88rem;color:#5C3A2A;line-height:1.7;">
-            En attendant, n'hésitez pas à consulter ma galerie sur Instagram pour vous inspirer,
+            En attendant, n'hésitez pas à consulter ma galerie sur TikTok (@hennebyoumy) pour vous inspirer,
             ou à me contacter directement si vous avez une question urgente.
           </p>
           <div style="margin-top:32px;text-align:center;padding:24px;background:rgba(107,26,42,.05);border-radius:10px;">
             <p style="font-size:.8rem;color:#5C3A2A;margin:0 0 8px;font-weight:600;">Besoin de me joindre rapidement ?</p>
-            <a href="tel:+33600000000" style="color:#6B1A2A;font-size:.95rem;text-decoration:none;font-weight:600;">+33 6 00 00 00 00</a>
+            <a href="tel:+221766955333" style="color:#6B1A2A;font-size:.95rem;text-decoration:none;font-weight:600;">+221 76 695 53 33</a>
             <span style="color:#C9A84C;margin:0 12px;">|</span>
-            <a href="mailto:contact@hennebyoumish.fr" style="color:#6B1A2A;font-size:.95rem;text-decoration:none;font-weight:600;">contact@hennebyoumish.fr</a>
+            <a href="mailto:oumydioufdiakhate1@gmail.com" style="color:#6B1A2A;font-size:.95rem;text-decoration:none;font-weight:600;">oumydioufdiakhate1@gmail.com</a>
           </div>
         </div>
         <div style="background:#2C1810;padding:24px 40px;text-align:center;">
           <p style="color:rgba(250,245,236,.5);font-size:.78rem;margin:0;">
-            © 2025 Henné by Oumoul Khalifa — Île-de-France<br>
+            © 2025 Henné by Oumoul Khalifa — Dakar, Sénégal<br>
             Vous recevez cet email car vous avez rempli le formulaire de réservation.
           </p>
         </div>
