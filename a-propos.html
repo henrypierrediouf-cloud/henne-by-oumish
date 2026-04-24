@@ -30,7 +30,24 @@
       margin: 0 auto;
     }
 
-    .about-image-wrap { position: relative; }
+    .about-image-wrap { position: relative; display: flex; justify-content: center; }
+
+    .about-tiktok-wrap {
+      width: 100%;
+      max-width: 340px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 20px 60px var(--shadow);
+      background: #000;
+      aspect-ratio: 9 / 16;
+    }
+
+    .about-tiktok-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
 
     .about-img-placeholder {
       width: 100%;
@@ -315,19 +332,15 @@
   <section class="section">
     <div class="about-grid">
       <div class="about-image-wrap fade-in">
-        <div class="about-img-placeholder">
-          <div class="about-img-label">
-            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <path d="m21 15-5-5L5 21"/>
-            </svg>
-            Photo de l'artiste
-          </div>
-        </div>
-        <div class="about-accent-box">
-          <div class="big-num">5+</div>
-          <p>années<br>d'expérience</p>
+        <div class="about-tiktok-wrap">
+          <iframe
+            src="https://www.tiktok.com/embed/v2/7617619481065655573"
+            allowfullscreen
+            allow="encrypted-media"
+            frameborder="0"
+            scrolling="no"
+            loading="lazy"
+          ></iframe>
         </div>
       </div>
 
