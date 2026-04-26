@@ -1151,18 +1151,19 @@
           body: JSON.stringify({ statut }),
         });
         if (!res.ok) throw new Error('Erreur serveur');
-        showToast(`Avis ${statut.toLowerCase()}`);
+        toast(`Avis ${statut.toLowerCase()}`, 'success');
         await chargerAvis();
-      } catch { showToast('Erreur réseau'); }
+      } catch { toast('Erreur réseau', 'error'); }
     }
 
     async function supprimerAvis(id) {
       if (!confirm('Supprimer cet avis définitivement ?')) return;
       try {
-        await fetch(`/api/avis/${id}?key=${API_KEY}`, { method: 'DELETE' });
-        showToast('Avis supprimé');
-        chargerAvis();
-      } catch { showToast('Erreur réseau'); }
+        const res = await fetch(`/api/avis/${id}?key=${API_KEY}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Erreur serveur');
+        toast('Avis supprimé', 'success');
+        await chargerAvis();
+      } catch { toast('Erreur réseau', 'error'); }
     }
 
     function escAdmin(s) {
