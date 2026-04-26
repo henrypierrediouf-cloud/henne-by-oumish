@@ -427,53 +427,24 @@
   <script>
     // Gallery filters
     const filterBtns = document.querySelectorAll('.filter-btn');
-    const items = document.querySelectorAll('.gallery-item');
+    // Génère automatiquement le thumbnail de chaque vidéo
+    document.querySelectorAll('.gallery-grid video').forEach(video => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
+      video.setAttribute('preload', 'metadata');
 
-        items.forEach(item => {
-          if (filter === 'all' || item.dataset.cat === filter) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
-        });
-      });
-    });
+      video.addEventListener('loadedmetadata', () => {
+        video.currentTime = 0.5;
+      }, { once: true });
 
-    // Lightbox
-    const lightbox = document.getElementById('lightbox');
-    const caption  = document.getElementById('lightbox-caption');
-    const closeBtn = document.getElementById('lightbox-close');
-
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        const imgEl = document.getElementById('lightbox-img');
-        imgEl.src = item.dataset.img || '';
-        imgEl.alt = item.dataset.label || '';
-        caption.textContent = item.dataset.label || '';
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    closeBtn.addEventListener('click', closeLightbox);
-
-    lightbox.addEventListener('click', e => {
-      if (e.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeLightbox();
+      video.addEventListener('seeked', () => {
+        canvas.width  = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        video.setAttribute('poster', canvas.toDataURL('image/jpeg', 0.8));
+        video.currentTime = 0;
+      }, { once: true });
     });
   </script>
 </body>
