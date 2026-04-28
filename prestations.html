@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prestations & Tarifs — Henné by Oumoul Khalifa</title>
-  <meta name="description" content="Prestations & tarifs Henné by Oumoul Khalifa — Mariage dès 150€, EVJF dès 80€, domicile dès 40€, stand événement sur devis. Henné naturel en Dakar, Sénégal." />
+  <meta name="description" content="Prestations & tarifs Henné by Oumoul Khalifa — Henné liquide dès 2 000 F CFA, henné traditionnel dès 3 000 F CFA. Mariages, EVJF, domicile, événements. Dakar, Sénégal." />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Henné by Oumoul Khalifa" />
   <meta property="og:title" content="Prestations & Tarifs — Henné by Oumoul Khalifa" />
-  <meta property="og:description" content="Mariage dès 150€, EVJF dès 80€, henné à domicile dès 40€, stand événement sur devis. Henné naturel en Dakar, Sénégal." />
+  <meta property="og:description" content="Henné liquide dès 2 000 F CFA, henné traditionnel dès 3 000 F CFA. Mariages, EVJF, domicile, événements. Henné naturel en Dakar, Sénégal." />
   <meta property="og:url" content="https://henne-by-oumoul-khalifa.onrender.com/prestations.html" />
   <meta property="og:image" content="https://henne-by-oumoul-khalifa.onrender.com/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -286,6 +286,107 @@
       padding-bottom: 22px;
     }
 
+    /* ── GRILLE TARIFAIRE ──────────────────────────────────── */
+    .tarif-section {
+      max-width: 1100px;
+      margin: 60px auto 0;
+    }
+
+    .tarif-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .tarif-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid rgba(201,168,76,0.2);
+      box-shadow: 0 4px 24px var(--shadow);
+      overflow: hidden;
+    }
+
+    .tarif-card-header {
+      padding: 28px 32px 22px;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .tarif-card.liquide .tarif-card-header {
+      background: linear-gradient(135deg, rgba(107,26,42,0.04), rgba(201,168,76,0.06));
+    }
+
+    .tarif-card.traditionnel .tarif-card-header {
+      background: linear-gradient(135deg, rgba(107,26,42,0.08), rgba(201,168,76,0.12));
+    }
+
+    .tarif-card-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: rgba(107,26,42,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .tarif-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--bordeaux);
+      margin: 0;
+    }
+
+    .tarif-card-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      margin-top: 2px;
+      letter-spacing: 0.03em;
+    }
+
+    .tarif-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      transition: background 0.2s;
+    }
+
+    .tarif-row:last-child { border-bottom: none; }
+
+    .tarif-row:hover { background: rgba(201,168,76,0.04); }
+
+    .tarif-label {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.4;
+    }
+
+    .tarif-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--bordeaux);
+      white-space: nowrap;
+      margin-left: 16px;
+    }
+
+    .tarif-price span {
+      font-size: 0.78rem;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      color: var(--text-mid);
+    }
+
+    @media (max-width: 768px) {
+      .tarif-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── NOTE TARIFAIRE ────────────────────────────────────── */
     .tarif-note {
       background: var(--white);
@@ -355,7 +456,7 @@
           <div class="service-icon">💍</div>
           <div class="service-title-block">
             <h2 class="service-name">Henné Mariage</h2>
-            <div class="service-price">À partir de 150€ <span>/ prestation</span></div>
+            <div class="service-price"><a href="#tarifs" style="font-size:0.85rem;color:var(--gold);font-family:'Raleway',sans-serif;font-weight:500;text-decoration:none;">Voir grille tarifaire ↓</a></div>
           </div>
         </div>
         <p class="service-desc">
@@ -385,7 +486,7 @@
           <div class="service-icon">🥂</div>
           <div class="service-title-block">
             <h2 class="service-name">Henné Soirée / EVJF</h2>
-            <div class="service-price">À partir de 80€ <span>/ groupe</span></div>
+            <div class="service-price"><a href="#tarifs" style="font-size:0.85rem;color:var(--gold);font-family:'Raleway',sans-serif;font-weight:500;text-decoration:none;">Voir grille tarifaire ↓</a></div>
           </div>
         </div>
         <p class="service-desc">
@@ -397,7 +498,7 @@
           <div class="include-list">
             <div class="include-item">Forfait groupe jusqu'à 5 personnes</div>
             <div class="include-item">Motifs poignet, main ou bras</div>
-            <div class="include-item">+10€ par personne supplémentaire</div>
+            <div class="include-item">Tarif par personne selon prestation choisie</div>
             <div class="include-item">Ambiance festive & conviviale</div>
             <div class="include-item">Photos souvenir offertes</div>
           </div>
@@ -411,7 +512,7 @@
           <div class="service-icon">🏠</div>
           <div class="service-title-block">
             <h2 class="service-name">Henné à Domicile</h2>
-            <div class="service-price">À partir de 40€ <span>/ personne</span></div>
+            <div class="service-price"><a href="#tarifs" style="font-size:0.85rem;color:var(--gold);font-family:'Raleway',sans-serif;font-weight:500;text-decoration:none;">Voir grille tarifaire ↓</a></div>
           </div>
         </div>
         <p class="service-desc">
@@ -437,7 +538,7 @@
           <div class="service-icon">🎪</div>
           <div class="service-title-block">
             <h2 class="service-name">Stand Événement</h2>
-            <div class="service-price">Sur devis <span>/ événement</span></div>
+            <div class="service-price"><a href="#tarifs" style="font-size:0.85rem;color:var(--gold);font-family:'Raleway',sans-serif;font-weight:500;text-decoration:none;">Voir grille tarifaire ↓</a></div>
           </div>
         </div>
         <p class="service-desc">
@@ -461,11 +562,79 @@
     <!-- Note tarifaire -->
     <div class="tarif-note">
       <p>
-        <strong>Note sur les tarifs :</strong> Les prix indiqués sont des tarifs de base à titre indicatif.
-        Un devis personnalisé vous sera envoyé après un premier échange pour affiner selon votre lieu,
-        la durée, le nombre de personnes et le type de motifs souhaités.
-        <strong>Déplacement gratuit en Dakar, Sénégal</strong> pour les mariages. Frais kilométriques appliqués au-delà.
+        <strong>Note sur les tarifs :</strong> Les prix sont indiqués en <strong>Francs CFA</strong> et s'appliquent quelle que soit l'occasion (mariage, soirée, domicile, événement).
+        Paiement accepté en <strong>espèces</strong>, via <strong>Orange Money</strong> ou <strong>Wave</strong>.
+        Pour toute question, n'hésitez pas à me contacter directement sur WhatsApp.
       </p>
+    </div>
+  </section>
+
+  <!-- GRILLE TARIFAIRE -->
+  <section id="tarifs" class="section section-alt">
+    <div class="section-header">
+      <p class="section-badge">✦ Tarifs détaillés ✦</p>
+      <h2 class="section-title">Grille <em>tarifaire</em></h2>
+      <div class="gold-rule"></div>
+    </div>
+
+    <div class="tarif-section">
+      <div class="tarif-grid">
+
+        <!-- Henné Liquide -->
+        <div class="tarif-card liquide fade-in">
+          <div class="tarif-card-header">
+            <div class="tarif-card-icon">💧</div>
+            <div>
+              <h3 class="tarif-card-title">Henné Liquide</h3>
+              <p class="tarif-card-subtitle">Léger, moderne, séchage rapide</p>
+            </div>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-label">Deux mains recto</span>
+            <span class="tarif-price">2 000 <span>F CFA</span></span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-label">Deux mains recto verso</span>
+            <span class="tarif-price">3 000 <span>F CFA</span></span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-label">Mains et pieds simple</span>
+            <span class="tarif-price">5 000 <span>F CFA</span></span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-label">Mains et pieds complet</span>
+            <span class="tarif-price">6 000 <span>F CFA</span></span>
+          </div>
+        </div>
+
+        <!-- Henné Traditionnel -->
+        <div class="tarif-card traditionnel fade-in">
+          <div class="tarif-card-header">
+            <div class="tarif-card-icon">🌿</div>
+            <div>
+              <h3 class="tarif-card-title">Henné Traditionnel</h3>
+              <p class="tarif-card-subtitle">Riche, profond, motifs élaborés</p>
+            </div>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-label">Deux mains recto</span>
+            <span class="tarif-price">3 000 <span>F CFA</span></span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-label">Deux mains recto verso</span>
+            <span class="tarif-price">4 000 <span>F CFA</span></span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-label">Mains et pieds simple</span>
+            <span class="tarif-price">6 000 <span>F CFA</span></span>
+          </div>
+          <div class="tarif-row">
+            <span class="tarif-label">Mains et pieds complet</span>
+            <span class="tarif-price">8 000 <span>F CFA</span></span>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -535,7 +704,7 @@
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
-          <p>J'accepte les virements bancaires, les paiements en espèces et via PayPal. Un acompte de 30% est demandé pour confirmer les réservations mariage. Le solde est réglé le jour de la prestation.</p>
+          <p>J'accepte les paiements en <strong>espèces</strong>, via <strong>Orange Money</strong> et via <strong>Wave</strong>. Un acompte de 30% est demandé pour confirmer les réservations mariage. Le solde est réglé le jour de la prestation.</p>
         </div>
       </div>
 
