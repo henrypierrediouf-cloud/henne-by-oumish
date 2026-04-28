@@ -477,42 +477,8 @@
 
   <!-- TESTIMONIALS CAROUSEL -->
   <div class="testimonial-strip">
-    <div id="testimonial-carousel">
-
-      <div class="testimonial-slide active">
-        <div class="stars">★★★★★</div>
-        <blockquote>
-          Oumoul Khalifa a réalisé mon henné de mariée et celui de toutes mes invitées.
-          Les motifs étaient absolument sublimes, précis et durables. Une vraie artiste !
-        </blockquote>
-        <p class="author">Yasmine B. — Mariée, Dakar</p>
-      </div>
-
-      <div class="testimonial-slide">
-        <div class="stars">★★★★★</div>
-        <blockquote>
-          Pour notre EVJF, Oumoul Khalifa est venue chez nous et a mis une ambiance incroyable !
-          Chaque fille est repartie avec un motif unique et magnifique. On recommande à 1000%.
-        </blockquote>
-        <p class="author">Camille R. — Témoin de mariée, Lyon</p>
-      </div>
-
-      <div class="testimonial-slide">
-        <div class="stars">★★★★★</div>
-        <blockquote>
-          Un henné à domicile pour une cérémonie — le résultat était d'une beauté exceptionnelle.
-          Des motifs fins et élégants, toute la famille était sous le charme.
-        </blockquote>
-        <p class="author">Nadia K. — Henné à domicile, Dakar</p>
-      </div>
-
-    </div>
-
-    <div class="testimonial-dots" id="testimonial-dots">
-      <button class="testimonial-dot active" data-idx="0" aria-label="Avis 1"></button>
-      <button class="testimonial-dot" data-idx="1" aria-label="Avis 2"></button>
-      <button class="testimonial-dot" data-idx="2" aria-label="Avis 3"></button>
-    </div>
+    <div id="testimonial-carousel"></div>
+    <div class="testimonial-dots" id="testimonial-dots"></div>
   </div>
 
   <!-- VIDÉO OUMOUL KHALIFA -->
@@ -852,21 +818,48 @@
 
   <script src="nav.js"></script>
   <script>
-    // Testimonial carousel
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const dots   = document.querySelectorAll('.testimonial-dot');
-    let cur = 0;
+    const FALLBACK_AVIS = [
+      { note: 5, commentaire: "Oumoul Khalifa a réalisé mon henné de mariée et celui de toutes mes invitées. Les motifs étaient absolument sublimes, précis et durables. Une vraie artiste !", prenom: "Yasmine B.", prestation: "Mariée, Dakar" },
+      { note: 5, commentaire: "Pour notre EVJF, Oumoul Khalifa est venue chez nous et a mis une ambiance incroyable ! Chaque fille est repartie avec un motif unique et magnifique. On recommande à 1000%.", prenom: "Camille R.", prestation: "Témoin de mariée" },
+      { note: 5, commentaire: "Un henné à domicile pour une cérémonie — le résultat était d'une beauté exceptionnelle. Des motifs fins et élégants, toute la famille était sous le charme.", prenom: "Nadia K.", prestation: "Henné à domicile, Dakar" }
+    ];
 
-    function goTo(n) {
-      slides[cur].classList.remove('active');
-      dots[cur].classList.remove('active');
-      cur = n;
-      slides[cur].classList.add('active');
-      dots[cur].classList.add('active');
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    dots.forEach(dot => dot.addEventListener('click', () => goTo(+dot.dataset.idx)));
-    setInterval(() => goTo((cur + 1) % slides.length), 5000);
+    function buildCarousel(avis) {
+      const carousel = document.getElementById('testimonial-carousel');
+      const dotsWrap = document.getElementById('testimonial-dots');
+      carousel.innerHTML = avis.map((a, i) => `
+        <div class="testimonial-slide${i === 0 ? ' active' : ''}">
+          <div class="stars">${'★'.repeat(a.note)}${'☆'.repeat(5 - a.note)}</div>
+          <blockquote>${escHtml(a.commentaire)}</blockquote>
+          <p class="author">${escHtml(a.prenom)}${a.prestation ? ' — ' + escHtml(a.prestation) : ''}</p>
+        </div>
+      `).join('');
+      dotsWrap.innerHTML = avis.map((_, i) => `
+        <button class="testimonial-dot${i === 0 ? ' active' : ''}" data-idx="${i}" aria-label="Avis ${i+1}"></button>
+      `).join('');
+
+      const slides = carousel.querySelectorAll('.testimonial-slide');
+      const dots   = dotsWrap.querySelectorAll('.testimonial-dot');
+      let cur = 0;
+      function goTo(n) {
+        slides[cur].classList.remove('active');
+        dots[cur].classList.remove('active');
+        cur = n;
+        slides[cur].classList.add('active');
+        dots[cur].classList.add('active');
+      }
+      dots.forEach(dot => dot.addEventListener('click', () => goTo(+dot.dataset.idx)));
+      if (slides.length > 1) setInterval(() => goTo((cur + 1) % slides.length), 5000);
+    }
+
+    fetch('/api/avis')
+      .then(r => r.json())
+      .then(avis => buildCarousel(avis.length >= 1 ? avis.slice(0, 5) : FALLBACK_AVIS))
+      .catch(() => buildCarousel(FALLBACK_AVIS));
   </script>
 </body>
 </html>
