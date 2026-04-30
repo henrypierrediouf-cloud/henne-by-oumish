@@ -30,6 +30,11 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   });
 });
 
+// Service Worker (PWA)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+}
+
 // Fade-in on scroll
 const fadeEls = document.querySelectorAll('.fade-in');
 const observer = new IntersectionObserver((entries) => {

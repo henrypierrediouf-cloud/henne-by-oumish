@@ -1,0 +1,40 @@
+{
+  "name": "Henné by Oumoul Khalifa",
+  "short_name": "Henné Oumish",
+  "description": "Artiste hennée à domicile au Sénégal — Mariages, EVJF, soirées et événements.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF5EC",
+  "theme_color": "#6B1A2A",
+  "lang": "fr",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["lifestyle", "beauty"],
+  "shortcuts": [
+    {
+      "name": "Prendre rendez-vous",
+      "short_name": "Réserver",
+      "url": "/reservation.html",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Voir la galerie",
+      "short_name": "Galerie",
+      "url": "/galerie.html",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    }
+  ]
+}
